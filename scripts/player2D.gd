@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+signal hit
 
 var velo = 0.0
 var acc = 0.0

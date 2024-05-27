@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c0anjecciyo2u"]
+[gd_scene load_steps=9 format=3 uid="uid://c0anjecciyo2u"]
 
 [ext_resource type="Script" path="res://scripts/marching_squares.gd" id="1_p2fbi"]
 [ext_resource type="PackedScene" uid="uid://dbsorfm41y3rp" path="res://scenes/player2D.tscn" id="2_mgone"]
+[ext_resource type="Script" path="res://walls.gd" id="3_0us5p"]
+[ext_resource type="Script" path="res://scripts/temp.gd" id="3_awk3n"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_yf2uq"]
 frequency = 0.0013
@@ -10,6 +12,22 @@ frequency = 0.0013
 width = 128
 height = 128
 noise = SubResource("FastNoiseLite_yf2uq")
+
+[sub_resource type="GDScript" id="GDScript_br03j"]
+script/source = "extends CollisionPolygon2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_em0j0"]
 
 [node name="MarchingSquares" type="Node2D"]
 script = ExtResource("1_p2fbi")
@@ -27,3 +45,16 @@ show_grid = false
 show_points = false
 
 [node name="Node2D" parent="." instance=ExtResource("2_mgone")]
+
+[node name="Walls" type="StaticBody2D" parent="." node_paths=PackedStringArray("mesh_instance")]
+script = ExtResource("3_0us5p")
+mesh_instance = NodePath("MeshInstance2D")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
+position = Vector2(1.90735e-06, 1.90735e-06)
+polygon = PackedVector2Array(0, 0, 0, 100, 100, 100)
+script = SubResource("GDScript_br03j")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Walls"]
+mesh = SubResource("ArrayMesh_em0j0")
+script = ExtResource("3_awk3n")
