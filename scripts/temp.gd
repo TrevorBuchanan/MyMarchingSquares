@@ -14,7 +14,7 @@ func _ready():
 	# Define the colors for each vertex (optional)
 	var colors = PackedColorArray()
 	colors.append(Color(1, 0, 0))  # Red for Point A
-	colors.append(Color(0, 1, 0))  # Green for Point B
+	colors.append(Color(0, 1, 0))  # Green for Point 
 	colors.append(Color(0, 0, 1))  # Blue for Point C
 	
 	# Define the indices for the triangle (the order of the vertices)

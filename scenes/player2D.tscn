@@ -13,7 +13,7 @@ material = SubResource("StandardMaterial3D_ixqvd")
 [sub_resource type="MeshTexture" id="MeshTexture_0e5tx"]
 mesh = SubResource("QuadMesh_ffvjx")
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player2D" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_f7i7v")
 

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://17e5qe0aib2l"]
+
+[ext_resource type="PackedScene" uid="uid://dbsorfm41y3rp" path="res://scenes/player2D.tscn" id="1_ns0dy"]
+[ext_resource type="PackedScene" uid="uid://c0anjecciyo2u" path="res://scenes/marching_squares.tscn" id="2_qgjd0"]
+
+[node name="Main" type="Node"]
+
+[node name="MarchingSquares" parent="." instance=ExtResource("2_qgjd0")]
+
+[node name="Player2D" parent="." instance=ExtResource("1_ns0dy")]
