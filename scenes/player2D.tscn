@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbsorfm41y3rp"]
+[gd_scene load_steps=7 format=3 uid="uid://dbsorfm41y3rp"]
 
 [ext_resource type="Script" path="res://scripts/player2D.gd" id="1_f7i7v"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7kirn"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_hnnyg"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_28mjd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ixqvd"]
 albedo_color = Color(1, 0.113725, 0.580392, 1)
@@ -18,12 +20,12 @@ motion_mode = 1
 script = ExtResource("1_f7i7v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_7kirn")
+shape = SubResource("CircleShape2D_hnnyg")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 position = Vector2(-0.25, -0.500001)
 scale = Vector2(20.5, 21)
-mesh = SubResource("QuadMesh_ffvjx")
+mesh = SubResource("SphereMesh_28mjd")
 texture = SubResource("MeshTexture_0e5tx")
 
 [node name="Camera2D" type="Camera2D" parent="."]
