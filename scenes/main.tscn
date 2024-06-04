@@ -6,5 +6,8 @@
 [node name="Main" type="Node"]
 
 [node name="MarchingSquares" parent="." instance=ExtResource("2_qgjd0")]
+visible = false
+show_grid = true
+show_points = true
 
 [node name="Player2D" parent="." instance=ExtResource("1_ns0dy")]

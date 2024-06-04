@@ -37,6 +37,6 @@ func _physics_process(delta):
 		emit_signal("hit")
 		velocity.x = 0
 
-# Optional: Use this function to reset velocity upon hit signal
+# Reset velocity upon hit signal
 func _on_hit():
 	velocity = Vector2.ZERO
