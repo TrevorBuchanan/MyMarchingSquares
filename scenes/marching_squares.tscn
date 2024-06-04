@@ -28,5 +28,6 @@ mesh_instance = NodePath("MeshInstance2D")
 collision_container = NodePath("CollisionContainer")
 
 [node name="CollisionContainer" type="StaticBody2D" parent="."]
+visible = false
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
