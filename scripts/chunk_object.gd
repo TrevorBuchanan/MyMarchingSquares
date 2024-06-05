@@ -1,6 +1,8 @@
 extends Object
 
-var color : Color = Color.BLACK
 
-func get_color() -> Color:
-	return color
+func save() -> void:
+	pass
+
+func reload_object():
+	pass

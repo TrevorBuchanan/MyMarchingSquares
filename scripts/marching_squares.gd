@@ -29,7 +29,6 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var mesh = make_marching_squares_mesh()
-	#var mesh = generate_mesh()
 	mesh_instance.mesh = mesh
 	# Generate collision shapes from the mesh
 	generate_collision_shapes(mesh)

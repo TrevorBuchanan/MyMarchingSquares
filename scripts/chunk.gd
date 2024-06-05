@@ -8,10 +8,9 @@ var chunk_object : ChunkObject
 
 
 # Constructor
-func _init(source_pos : Vector2, new_chunk_object: ChunkObject = null):
+func _init(source_pos : Vector2):
 	self.source_position = source_pos
-	self.chunk_object = new_chunk_object
-	create_content()
+	self.chunk_object = create_content()
 
 
 # Method to get the chunk content object
@@ -24,11 +23,13 @@ func get_source_position() -> Vector2:
 	return source_position
 
 
-func create_content():
+func create_content() -> ChunkObject:
 	print("Creating content for")
 	print(source_position)
+	return null
 
 
 func load_content():
 	print("Loading content for")
 	print(source_position)
+
