@@ -11,7 +11,6 @@ signal hit
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _physics_process(delta):
-	# Add the gravity.
 	velocity.y += gravity * delta
 
 	# Handle jump.
@@ -35,7 +34,6 @@ func _physics_process(delta):
 	# Emit hit signal if a collision occurs
 	if is_on_wall():
 		emit_signal("hit")
-		velocity.x = 0
 
 # Reset velocity upon hit signal
 func _on_hit():

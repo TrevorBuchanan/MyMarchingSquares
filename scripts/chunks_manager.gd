@@ -5,11 +5,12 @@ const Chunk = preload("res://scripts/chunk.gd")
 @export var viewer : Node2D
 @export var chunk_size : int = 1024
 @export var render_distance : int = 2  # In number of chunks
-@export var chunk_type : Node2D
+@export var chunk_type : PackedScene
 
 var visible_chucks : Array[Chunk] = []
 var cached_chunks: Dictionary = {}
 var current_chunk_pos: Vector2
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -84,5 +85,5 @@ func get_chunk_pos(pos : Vector2) -> Vector2:
 func _process(delta):
 	if get_chunk_pos(viewer.position) != current_chunk_pos:
 		print("Update chunks")
-		unload_out_of_range_chunks()
 		load_surrounding_chunks()
+		unload_out_of_range_chunks()

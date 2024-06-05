@@ -21,6 +21,7 @@ ground_threshold = 0.48
 grid_size = 64
 width = 1024
 height = 1024
+source_position = Vector2(2.08165e-12, 2.08165e-12)
 noise = SubResource("NoiseTexture2D_dtf1j")
 show_grid = false
 show_points = false
@@ -28,6 +29,5 @@ mesh_instance = NodePath("MeshInstance2D")
 collision_container = NodePath("CollisionContainer")
 
 [node name="CollisionContainer" type="StaticBody2D" parent="."]
-visible = false
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]

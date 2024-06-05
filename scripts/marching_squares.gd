@@ -12,6 +12,7 @@ extends Node2D
 @export var grid_size : int = 50
 @export var width : int = 1800
 @export var height : int = 1200
+@export var source_position : Vector2 = Vector2.ZERO
 
 # Noise texture
 @export var noise : NoiseTexture2D
@@ -28,6 +29,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	position = source_position
 	var mesh = make_marching_squares_mesh()
 	mesh_instance.mesh = mesh
 	# Generate collision shapes from the mesh
@@ -67,10 +69,10 @@ func make_marching_squares_mesh() -> ArrayMesh:
 		while i < width:
 			pt_vals = [0, 0, 0, 0]
 			square_index = 0b0000
-			pt_vals[0] = (noise.noise.get_noise_2d(i, j) + 1.0) / 2.0
-			pt_vals[1] = (noise.noise.get_noise_2d(i + grid_size, j) + 1.0) / 2.0
-			pt_vals[2] = (noise.noise.get_noise_2d(i + grid_size, j + grid_size) + 1.0) / 2.0
-			pt_vals[3] = (noise.noise.get_noise_2d(i, j + grid_size) + 1.0) / 2.0
+			pt_vals[0] = (noise.noise.get_noise_2d(i + source_position.x, j + source_position.y) + 1.0) / 2.0
+			pt_vals[1] = (noise.noise.get_noise_2d(i + grid_size + source_position.x, j + source_position.y) + 1.0) / 2.0
+			pt_vals[2] = (noise.noise.get_noise_2d(i + grid_size + source_position.x, j + grid_size + source_position.y) + 1.0) / 2.0
+			pt_vals[3] = (noise.noise.get_noise_2d(i + source_position.x, j + grid_size + source_position.y) + 1.0) / 2.0
 			
 			if pt_vals[0] > ground_threshold: 
 				square_index |= 0b0001
@@ -176,7 +178,7 @@ func draw_points():
 		while i <= width:
 			j = 0
 			while j <= height:
-				var value = (noise.noise.get_noise_2d(i, j) + 1.0) / 2.0
+				var value = (noise.noise.get_noise_2d(i + source_position.x, j + source_position.y) + 1.0) / 2.0
 				var lerp_color = point_color1.lerp(point_color2, value)
 				draw_circle(Vector2(i, j), 10, lerp_color)
 				j += grid_size
