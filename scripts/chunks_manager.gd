@@ -12,7 +12,6 @@ var cached_chunks: Dictionary = {}
 var current_chunk_pos: Vector2
 
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if viewer: 
@@ -23,17 +22,6 @@ func _ready():
 		print("No active viewer found")
 		return
 		# load no chunks
-	
-	# Generate a random color
-	var random_color = Color(
-		randf(),  # Random value between 0 and 1 for red
-		randf(),  # Random value between 0 and 1 for green
-		randf(),  # Random value between 0 and 1 for blue
-		1.0       # Alpha (opacity) value set to 1 for full opacity
-	)
-
-	# Set the modulate property of the Sprite2D to the random color
-	modulate = random_color
 
 
 func load_surrounding_chunks() -> void:
@@ -52,6 +40,7 @@ func load_chunk(source_pos : Vector2) -> void:
 	if cached_chunks.has(source_pos):
 		# if so then reload it
 		cached_chunks[source_pos].load_content()
+		add_child(cached_chunks[source_pos].get_chunk_object())
 	# otherwise go to load new chunk
 	else:
 		load_new_chuck(source_pos)
@@ -59,7 +48,8 @@ func load_chunk(source_pos : Vector2) -> void:
 
 func load_new_chuck(source_pos : Vector2) -> void:
 	# Load new chunk and save chunk
-	cached_chunks[source_pos] = Chunk.new(source_pos)
+	cached_chunks[source_pos] = Chunk.new(source_pos, chunk_type)
+	add_child(cached_chunks[source_pos].get_chunk_object())
 
 
 #func save_chunk():

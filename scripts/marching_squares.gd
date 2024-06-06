@@ -10,8 +10,8 @@ extends Node2D
 # Settings values
 @export_range(0, 1, 0.01) var ground_threshold : float = 0.5
 @export var grid_size : int = 50
-@export var width : int = 1800
-@export var height : int = 1200
+@export var width : int = 1024
+@export var height : int = 1024
 @export var source_position : Vector2 = Vector2.ZERO
 
 # Noise texture
