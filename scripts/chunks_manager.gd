@@ -25,22 +25,40 @@ func _ready():
 
 
 func load_surrounding_chunks() -> void:
-	# first load viwers chunks
 	load_chunk(current_chunk_pos)
-	for i in range(1, render_distance + 1):
-		for j in range(1, render_distance + 1):
-			load_chunk(Vector2(current_chunk_pos.x - (i * chunk_size),
-								current_chunk_pos.y - (j * chunk_size)))
-			load_chunk(Vector2(current_chunk_pos.x + (i * chunk_size),
-								current_chunk_pos.y + (j * chunk_size)))
+	# first load viwers chunks
+	var layer: int = 1
+	var edge_dist : int = 2
+	while layer <= render_distance:
+		var offset_chunk : Vector2 = Vector2(current_chunk_pos.x + (layer * chunk_size), current_chunk_pos.y + (layer * chunk_size))
+		load_chunk(offset_chunk)
+		for i in range(edge_dist):
+			offset_chunk.y -= chunk_size
+			load_chunk(offset_chunk)
+		
+		for i in range(edge_dist):
+			offset_chunk.x -= chunk_size
+			load_chunk(offset_chunk)
+		
+		for i in range(edge_dist):
+			offset_chunk.y += chunk_size
+			load_chunk(offset_chunk)
+		
+		for i in range(edge_dist - 1):
+			offset_chunk.x += chunk_size
+			load_chunk(offset_chunk)
+		
+		edge_dist += 2
+		layer += 1
 
 
 func load_chunk(source_pos : Vector2) -> void:
 	# Check if chunk data has been saved in cache
 	if cached_chunks.has(source_pos):
 		# if so then reload it
-		cached_chunks[source_pos].load_content()
-		add_child(cached_chunks[source_pos].get_chunk_object())
+		#cached_chunks[source_pos].load_content()
+		#add_child(cached_chunks[source_pos].get_chunk_object())
+		pass
 	# otherwise go to load new chunk
 	else:
 		load_new_chuck(source_pos)
@@ -48,7 +66,8 @@ func load_chunk(source_pos : Vector2) -> void:
 
 func load_new_chuck(source_pos : Vector2) -> void:
 	# Load new chunk and save chunk
-	cached_chunks[source_pos] = Chunk.new(source_pos, chunk_type)
+	print(source_pos)
+	cached_chunks[source_pos] = Chunk.new(source_pos, chunk_type, chunk_size)
 	add_child(cached_chunks[source_pos].get_chunk_object())
 
 

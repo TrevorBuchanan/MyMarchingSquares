@@ -29,6 +29,13 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#print("Class variables and their values:")
+	#var property_list = get_property_list()
+	#for property in property_list:
+		#var name = property.name
+		#var value = get(name)
+		#print(name, ":", value)
+	
 	position = source_position
 	var mesh = make_marching_squares_mesh()
 	mesh_instance.mesh = mesh

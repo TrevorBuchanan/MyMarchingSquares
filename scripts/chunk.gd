@@ -6,11 +6,11 @@ var chunk_object : Node2D
 
 
 # Constructor
-func _init(source_pos : Vector2, chunk_scene : PackedScene):
+func _init(source_pos : Vector2, chunk_scene : PackedScene, size : int):
 	self.source_position = source_pos
 	self.chunk_object = chunk_scene.instantiate()
 	chunk_object.source_position = source_pos
-	chunk_object.width = width
+	chunk_object.width = size
 
 
 # Method to get the chunk content object
