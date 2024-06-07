@@ -4,6 +4,7 @@ const Chunk = preload("res://scripts/chunk.gd")
 
 @export var viewer : Node2D
 @export var chunk_size : int = 1024
+@export var step_size : int = 64
 @export var render_distance : int = 2  # In number of chunks
 @export var chunk_type : PackedScene
 
@@ -67,7 +68,7 @@ func load_chunk(source_pos : Vector2) -> void:
 func load_new_chuck(source_pos : Vector2) -> void:
 	# Load new chunk and save chunk
 	print(source_pos)
-	cached_chunks[source_pos] = Chunk.new(source_pos, chunk_type, chunk_size)
+	cached_chunks[source_pos] = Chunk.new(source_pos, chunk_type, chunk_size, step_size)
 	add_child(cached_chunks[source_pos].get_chunk_object())
 
 

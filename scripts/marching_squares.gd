@@ -38,9 +38,10 @@ func _ready():
 	
 	position = source_position
 	var mesh = make_marching_squares_mesh()
-	mesh_instance.mesh = mesh
-	# Generate collision shapes from the mesh
-	generate_collision_shapes(mesh)
+	if mesh:
+		mesh_instance.mesh = mesh
+		# Generate collision shapes from the mesh
+		generate_collision_shapes(mesh)
 
 
 func make_marching_squares_mesh() -> ArrayMesh:
@@ -104,10 +105,15 @@ func make_marching_squares_mesh() -> ArrayMesh:
 			i += grid_size
 		j += grid_size
 	
+	# Check if empty space
+	if len(vertices) == 0 or len(indices) == 0:
+		return null
+	
 	# Initialize the ArrayMesh
 	var arr_mesh = ArrayMesh.new()
 	var arrays = []
 	arrays.resize(Mesh.ARRAY_MAX)
+
 	arrays[Mesh.ARRAY_VERTEX] = vertices
 	arrays[Mesh.ARRAY_COLOR] = colors
 	arrays[Mesh.ARRAY_INDEX] = indices
