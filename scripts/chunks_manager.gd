@@ -32,22 +32,27 @@ func load_surrounding_chunks() -> void:
 	var edge_dist : int = 2
 	while layer <= render_distance:
 		var offset_chunk : Vector2 = Vector2(current_chunk_pos.x + (layer * chunk_size), current_chunk_pos.y + (layer * chunk_size))
-		load_chunk(offset_chunk)
+		if current_chunk_pos.distance_to(offset_chunk) <= render_distance * chunk_size:
+			load_chunk(offset_chunk)
 		for i in range(edge_dist):
 			offset_chunk.y -= chunk_size
-			load_chunk(offset_chunk)
+			if current_chunk_pos.distance_to(offset_chunk) <= render_distance * chunk_size:
+				load_chunk(offset_chunk)
 		
 		for i in range(edge_dist):
 			offset_chunk.x -= chunk_size
-			load_chunk(offset_chunk)
+			if current_chunk_pos.distance_to(offset_chunk) <= render_distance * chunk_size:
+				load_chunk(offset_chunk)
 		
 		for i in range(edge_dist):
 			offset_chunk.y += chunk_size
-			load_chunk(offset_chunk)
+			if current_chunk_pos.distance_to(offset_chunk) <= render_distance * chunk_size:
+				load_chunk(offset_chunk)
 		
 		for i in range(edge_dist - 1):
 			offset_chunk.x += chunk_size
-			load_chunk(offset_chunk)
+			if current_chunk_pos.distance_to(offset_chunk) <= render_distance * chunk_size:
+				load_chunk(offset_chunk)
 		
 		edge_dist += 2
 		layer += 1
