@@ -16,16 +16,13 @@ var current_chunk_pos: Vector2
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if viewer: 
-		# load surrounding chunks
-		current_chunk_pos = get_chunk_pos(viewer.position)
 		load_surrounding_chunks()
 	else: 
 		print("No active viewer found")
-		return
-		# load no chunks
 
 
 func load_surrounding_chunks() -> void:
+	current_chunk_pos = get_chunk_pos(viewer.position)
 	load_chunk(current_chunk_pos)
 	# first load viwers chunks
 	var layer: int = 1
@@ -34,6 +31,7 @@ func load_surrounding_chunks() -> void:
 		var offset_chunk : Vector2 = Vector2(current_chunk_pos.x + (layer * chunk_size), current_chunk_pos.y + (layer * chunk_size))
 		if current_chunk_pos.distance_to(offset_chunk) <= render_distance * chunk_size:
 			load_chunk(offset_chunk)
+		
 		for i in range(edge_dist):
 			offset_chunk.y -= chunk_size
 			if current_chunk_pos.distance_to(offset_chunk) <= render_distance * chunk_size:
@@ -61,10 +59,10 @@ func load_surrounding_chunks() -> void:
 func load_chunk(source_pos : Vector2) -> void:
 	# Check if chunk data has been saved in cache
 	if cached_chunks.has(source_pos):
-		# if so then reload it
-		#cached_chunks[source_pos].load_content()
-		#add_child(cached_chunks[source_pos].get_chunk_object())
-		pass
+		var to_load_chunk : Chunk = cached_chunks[source_pos]
+		if not to_load_chunk.loaded:
+			to_load_chunk.load_content(chunk_type, chunk_size, step_size)
+			visible_chucks.append(cached_chunks[source_pos])
 	# otherwise go to load new chunk
 	else:
 		load_new_chuck(source_pos)
@@ -72,8 +70,8 @@ func load_chunk(source_pos : Vector2) -> void:
 
 func load_new_chuck(source_pos : Vector2) -> void:
 	# Load new chunk and save chunk
-	print(source_pos)
 	cached_chunks[source_pos] = Chunk.new(source_pos, chunk_type, chunk_size, step_size)
+	visible_chucks.append(cached_chunks[source_pos])
 	add_child(cached_chunks[source_pos].get_chunk_object())
 
 
@@ -82,7 +80,11 @@ func load_new_chuck(source_pos : Vector2) -> void:
 	#pass
 
 func unload_out_of_range_chunks():
-	pass
+	
+	for chunk in visible_chucks:
+		if chunk.source_position.distance_to(current_chunk_pos) > render_distance * chunk_size:
+			chunk.unload_content()
+			visible_chucks.erase(chunk)
 
 func unload_chunk():
 	# Remove chunk from list of chunks in view

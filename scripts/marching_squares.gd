@@ -29,13 +29,6 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#print("Class variables and their values:")
-	#var property_list = get_property_list()
-	#for property in property_list:
-		#var name = property.name
-		#var value = get(name)
-		#print(name, ":", value)
-	
 	position = source_position
 	var mesh = make_marching_squares_mesh()
 	if mesh:
@@ -236,6 +229,9 @@ func marching_squares_lerp(val1, val2):
 		amt = (ground_threshold - val1) / (val2 - val1)
 	return lerp(0, grid_size, amt)
 
+
+func compact_data_to_list() -> Array:
+	return []
 
 func _process(_delta):
 	#queue_redraw()
