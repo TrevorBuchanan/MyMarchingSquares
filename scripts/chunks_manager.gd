@@ -8,10 +8,9 @@ const Chunk = preload("res://scripts/chunk.gd")
 @export var render_distance : int = 2  # In number of chunks
 @export var chunk_type : PackedScene
 
-var visible_chucks : Array[Chunk] = []
-var cached_chunks: Dictionary = {}
 var current_chunk_pos: Vector2
-
+var visible_chunks: Array[Chunk] = []
+var layer: int = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -58,37 +57,23 @@ func load_surrounding_chunks() -> void:
 
 func load_chunk(source_pos : Vector2) -> void:
 	# Check if chunk data has been saved in cache
-	if cached_chunks.has(source_pos):
-		var to_load_chunk : Chunk = cached_chunks[source_pos]
-		if not to_load_chunk.loaded:
-			to_load_chunk.load_content(chunk_type, chunk_size, step_size)
-			visible_chucks.append(cached_chunks[source_pos])
 	# otherwise go to load new chunk
-	else:
-		load_new_chuck(source_pos)
+	# For now just load new chunk
+	load_new_chuck(source_pos)
 
 
 func load_new_chuck(source_pos : Vector2) -> void:
 	# Load new chunk and save chunk
-	cached_chunks[source_pos] = Chunk.new(source_pos, chunk_type, chunk_size, step_size)
-	visible_chucks.append(cached_chunks[source_pos])
-	add_child(cached_chunks[source_pos].get_chunk_object())
+	var new_chunk = Chunk.new(source_pos, chunk_type, chunk_size, step_size)
+	visible_chunks.append(new_chunk)
+	add_child(new_chunk.get_chunk_object())
 
-
-#func save_chunk():
-	## Add chunk to cache of explored chunks
-	#pass
 
 func unload_out_of_range_chunks():
-	
-	for chunk in visible_chucks:
+	for chunk in visible_chunks:
 		if chunk.source_position.distance_to(current_chunk_pos) > render_distance * chunk_size:
 			chunk.unload_content()
-			visible_chucks.erase(chunk)
-
-func unload_chunk():
-	# Remove chunk from list of chunks in view
-	pass
+			visible_chunks.erase(chunk)
 
 
 func get_chunk_pos(pos : Vector2) -> Vector2:
@@ -100,7 +85,8 @@ func get_chunk_pos(pos : Vector2) -> Vector2:
 
 
 func _process(delta):
-	if get_chunk_pos(viewer.position) != current_chunk_pos:
-		print("Update chunks")
-		load_surrounding_chunks()
-		unload_out_of_range_chunks()
+	if viewer:
+		if get_chunk_pos(viewer.position) != current_chunk_pos:
+			load_surrounding_chunks()
+			unload_out_of_range_chunks()
+			print("New chunk")

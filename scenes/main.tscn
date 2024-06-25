@@ -9,7 +9,8 @@
 [node name="ChunksHolder" parent="." node_paths=PackedStringArray("viewer") instance=ExtResource("2_wkog7")]
 viewer = NodePath("../Player2D")
 chunk_size = 128
-render_distance = 8
+step_size = 128
+render_distance = 6
 chunk_type = ExtResource("2_uyfdp")
 
 [node name="Player2D" parent="." instance=ExtResource("1_ns0dy")]
